@@ -53,6 +53,11 @@ const stubCallTool: CallMcpTool = async (name, args) => {
   return defaultHarnessCallTool(name, args)
 }
 
+// 30s timeout: the first integration test to call `makeHarness` pays the
+// MCP-server cold-start cost (spawn aegis-mcp Python subprocess, load
+// spaCy model). On CI's fresh container that easily exceeds Bun's
+// default 5s hook timeout; local machines with a warm venv stay well
+// under. Subsequent tests share the MCP client and finish in <1s.
 beforeEach(async () => {
   if (!HAS_MCP) return
   harness = await makeHarness({
@@ -86,7 +91,7 @@ beforeEach(async () => {
   })
   writeFileSync(CASSETTE_PATH, line + '\n')
   installCassetteAdapter({ workflow: 'planted-hallucination' })
-})
+}, 30_000)
 
 afterEach(() => {
   if (!HAS_MCP) return
