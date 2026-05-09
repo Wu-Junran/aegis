@@ -20,7 +20,10 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: '1.1.x'
+          # bun >= 1.2 — required to read the text-format `bun.lock` that
+          # newer local Bun versions emit. 1.1.x predates the format and
+          # fails frozen installs with `InvalidLockfileVersion`.
+          bun-version: 'latest'
 
       - name: Setup Python 3.11
         uses: actions/setup-python@v5
