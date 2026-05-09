@@ -1,0 +1,4 @@
+{
+	"request": { "model": "abab6.5-chat", "max_tokens": 64, "messages": [{ "role": "user", "content": "Read /etc/hosts" }], "tools": [{ "name": "FileRead", "description": "Read a file", "input_schema": { "type": "object", "properties": { "path": { "type": "string" } }, "required": ["path"] } }] },
+	"response": { "id": "mm-tool-use-cassette", "model": "abab6.5-chat", "reply": "(Minimax v1: function-call parsing pending.)", "choices": [{ "messages": [{ "sender_type": "BOT", "sender_name": "MiniMax", "text": "(Minimax v1: function-call parsing pending.)" }], "finish_reason": "stop" }], "usage": { "prompt_tokens": 10, "completion_tokens": 8, "total_tokens": 18 } }
+}

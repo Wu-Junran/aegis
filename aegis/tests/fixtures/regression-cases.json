@@ -1,0 +1,17 @@
+[
+  {
+    "name": "clinician-pasted PHI in user input",
+    "input": "Mr. John Doe (MRN 12345678, DOB 1958-04-12) was admitted today.",
+    "mustNotAppear": ["John Doe", "12345678", "1958-04-12"]
+  },
+  {
+    "name": "PHI inside a tool_result",
+    "input": "Lab review: Jane Roe's K+ is 5.4.",
+    "mustNotAppear": ["Jane Roe"]
+  },
+  {
+    "name": "PHI in multi-blob (system + user) shared pool",
+    "input": "John Doe's history (system context). John Doe complained of chest pain (user message).",
+    "mustNotAppear": ["John Doe"]
+  }
+]

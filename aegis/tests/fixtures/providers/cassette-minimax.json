@@ -1,0 +1,19 @@
+{
+	"request": {
+		"model": "abab6.5-chat",
+		"max_tokens": 64,
+		"messages": [{ "role": "user", "content": "Say hi." }]
+	},
+	"response": {
+		"id": "mm-plain-cassette",
+		"model": "abab6.5-chat",
+		"reply": "Hello from MiniMax.",
+		"choices": [
+			{
+				"messages": [{ "sender_type": "BOT", "sender_name": "MiniMax", "text": "Hello from MiniMax." }],
+				"finish_reason": "stop"
+			}
+		],
+		"usage": { "prompt_tokens": 3, "completion_tokens": 5, "total_tokens": 8 }
+	}
+}

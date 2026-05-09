@@ -1,0 +1,141 @@
+import Anthropic from '@anthropic-ai/sdk'
+import { describe, expect, test } from 'bun:test'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { loadPatient } from '../../src/medical/adapters/fhirAdapter.js'
+import { appendClinicalOverlay } from '../../src/medical/prompts/clinicalSystemPrompt.js'
+import { createTemplateRegistry } from '../../src/medical/templates/templateRegistry.js'
+import {
+	getDefaultAppState,
+	type AppState,
+} from '../../src/state/AppStateStore.js'
+import { createStore } from '../../src/state/store.js'
+
+const FIXTURE_PATH = join(__dirname, '..', 'fixtures', 'synthea_minimal.json')
+const HAS_KEY = !!process.env.ANTHROPIC_API_KEY
+const d = HAS_KEY ? describe : describe.skip
+
+d('Anthropic drafting (live, opt-in via ANTHROPIC_API_KEY)', () => {
+	test(
+		'drafts a SOAP note mentioning fixture facts end-to-end',
+		async () => {
+			const fixtureBundle = readFileSync(FIXTURE_PATH, 'utf8')
+			expect(fixtureBundle.length).toBeGreaterThan(0)
+
+			const parsedContext = {
+				patientId: 'pat-001',
+				demographics: { gender: 'male', birthDate: '1958-03-12' },
+				problems: [
+					{
+						resourceType: 'Condition',
+						code: { text: 'Congestive heart failure' },
+					},
+				],
+				medications: [
+					{
+						resourceType: 'MedicationRequest',
+						medicationCodeableConcept: {
+							text: 'Lisinopril 10mg',
+						},
+					},
+				],
+				allergies: [
+					{
+						resourceType: 'AllergyIntolerance',
+						code: { text: 'Penicillin allergy' },
+					},
+				],
+				observations: [],
+				priorNotes: [],
+				sourceBundlePath: FIXTURE_PATH,
+			}
+			const templates = [
+				{
+					id: 'soap',
+					name: 'SOAP',
+					source: 'builtin',
+					sections: [
+						{
+							id: 'S',
+							title: 'Subjective',
+							requiredFields: [],
+							promptGuidance: 'patient story',
+						},
+						{
+							id: 'O',
+							title: 'Objective',
+							requiredFields: [],
+							promptGuidance: 'observations',
+						},
+						{
+							id: 'A',
+							title: 'Assessment',
+							requiredFields: [],
+							promptGuidance: 'problems',
+						},
+						{
+							id: 'P',
+							title: 'Plan',
+							requiredFields: [],
+							promptGuidance: 'next steps',
+						},
+					],
+				},
+			]
+
+			const callTool = async (name: string, _args: any) => {
+				if (name === 'fhir_load_bundle')
+					return JSON.stringify(parsedContext)
+				if (name === 'list_templates')
+					return JSON.stringify(templates)
+				throw new Error(`unexpected tool ${name}`)
+			}
+
+			const store = createStore<AppState>(getDefaultAppState())
+			const patient = await loadPatient(FIXTURE_PATH, { callTool })
+			store.setState(s => ({ ...s, currentPatient: patient }))
+			const reg = createTemplateRegistry({ callTool })
+			const template = await reg.getTemplate('soap')
+			store.setState(s => ({ ...s, currentTemplate: template }))
+
+			const basePrompt = `You are Aegis, an assistant helping clinicians draft notes. Be concise.`
+			const systemParts = appendClinicalOverlay(
+				[basePrompt],
+				store.getState(),
+			)
+			const systemPrompt = systemParts.join('\n\n')
+
+			const client = new Anthropic({
+				apiKey: process.env.ANTHROPIC_API_KEY,
+			})
+			const response = await client.messages.create({
+				model: 'claude-haiku-4-5-20251001',
+				max_tokens: 1024,
+				system: systemPrompt,
+				messages: [
+					{
+						role: 'user',
+						content:
+							'Draft a short SOAP note for this patient. Label each section S/O/A/P.',
+					},
+				],
+			})
+
+			const text = response.content
+				.filter(
+					(b): b is Anthropic.TextBlock => b.type === 'text',
+				)
+				.map(b => b.text)
+				.join('\n')
+
+			// Structural — SOAP sections present.
+			expect(text).toMatch(/\bS\b[^\n]{0,20}:/i)
+			expect(text).toMatch(/\bP\b[^\n]{0,20}:/i)
+			// Factual — at least one fixture-specific term leaked through.
+			expect(/lisinopril|heart failure|penicillin/i.test(text)).toBe(
+				true,
+			)
+		},
+		60_000,
+	)
+})

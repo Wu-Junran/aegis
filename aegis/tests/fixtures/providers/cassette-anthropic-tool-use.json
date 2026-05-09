@@ -1,0 +1,11 @@
+{
+	"request": { "model": "claude-opus-4-7", "max_tokens": 64, "messages": [{ "role": "user", "content": "Read /etc/hosts" }], "tools": [{ "name": "FileRead", "description": "Read a file", "input_schema": { "type": "object", "properties": { "path": { "type": "string" } }, "required": ["path"] } }] },
+	"response": [
+		{ "type": "message_start", "message": { "id": "msg_anthropic_tool_use", "type": "message", "role": "assistant", "model": "claude-opus-4-7", "content": [], "stop_reason": null, "stop_sequence": null, "usage": { "input_tokens": 10, "output_tokens": 0 } } },
+		{ "type": "content_block_start", "index": 0, "content_block": { "type": "tool_use", "id": "call_FileRead_1", "name": "FileRead", "input": {} } },
+		{ "type": "content_block_delta", "index": 0, "delta": { "type": "input_json_delta", "partial_json": "{\"path\":\"/etc/hosts\"}" } },
+		{ "type": "content_block_stop", "index": 0 },
+		{ "type": "message_delta", "delta": { "stop_reason": "tool_use", "stop_sequence": null }, "usage": { "output_tokens": 5 } },
+		{ "type": "message_stop" }
+	]
+}

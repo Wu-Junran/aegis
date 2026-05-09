@@ -1,0 +1,6 @@
+Patient: John Doe
+DOB: 1958-04-12
+MRN: 12345678
+Encounter: 2026-04-22 with Jane Roe (caregiver).
+History: CHF, T2DM. Discharge meds include torsemide.
+Phone: 555-867-5309. Email: jdoe@example.com.

@@ -1,0 +1,32 @@
+{
+  "resourceType": "Bundle",
+  "id": "fixture-no-meds",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-002",
+        "name": [{"family": "Roe", "given": ["Jane"]}],
+        "gender": "female",
+        "birthDate": "1975-07-22"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-100",
+        "status": "final",
+        "subject": {"reference": "Patient/pat-002"},
+        "code": {
+          "coding": [
+            {"system": "http://loinc.org", "code": "8480-6", "display": "Systolic BP"}
+          ],
+          "text": "Systolic blood pressure"
+        },
+        "valueQuantity": {"value": 118, "unit": "mmHg"},
+        "effectiveDateTime": "2026-04-20T14:00:00Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+.venv/
+.DS_Store
+*.log
+.env
+.env.*
+*.tsbuildinfo
+coverage/
+.aegisrc
+
+# Regenerated each test run by validator-planted-hallucination.test.ts
+# (see Task 6.26). Workflow A/B/C cassettes ARE committed; this one is not.
+tests/cassettes/planted-hallucination.jsonl

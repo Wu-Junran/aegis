@@ -1,0 +1,6 @@
+{
+	"allowlist": ["anthropic", "openai"],
+	"providers": {
+		"openai": { "baseURL": "https://api.openai.com/v1" }
+	}
+}

@@ -1,0 +1,10 @@
+{
+  "name": "modifiers-napi",
+  "version": "0.0.0-aegis-stub",
+  "main": "./index.js",
+  "module": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./*": "./*.js"
+  }
+}

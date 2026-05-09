@@ -1,0 +1,10 @@
+# bunfig.toml — Bun configuration for development mode
+# The plugin intercepts `bun:bundle` imports → src/shims/bun-bundle.ts
+
+preload = ["./scripts/bun-plugin-shims.ts"]
+
+# [test] preload replaces (does not extend) the top-level preload.
+# tests/setup/preload.ts stacks the bun:bundle shim + an OTel-resources
+# stub so AppState-touching tests can load under bun test's strict ESM.
+[test]
+preload = ["./tests/setup/preload.ts"]

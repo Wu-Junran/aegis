@@ -1,0 +1,7 @@
+{
+  "name": "image-processor-napi",
+  "version": "0.0.0-aegis-stub",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": { ".": "./index.js" }
+}

@@ -1,0 +1,5 @@
+{
+	"request": { "model": "llama-3.1-70b", "max_tokens": 64, "messages": [{ "role": "user", "content": "Read /etc/hosts" }], "tools": [{ "name": "FileRead", "description": "Read a file", "input_schema": { "type": "object", "properties": { "path": { "type": "string" } } } }] },
+	"response": { "id": "chatcmpl-degraded", "object": "chat.completion", "created": 1714248003, "model": "llama-3.1-70b", "choices": [{ "index": 0, "message": { "role": "assistant", "content": "I would need a tool to read files; this model cannot call tools." }, "finish_reason": "stop" }], "usage": { "prompt_tokens": 16, "completion_tokens": 14, "total_tokens": 30 } },
+	"providerOverride": { "baseURL": "http://localhost:11434/v1", "modelId": "llama-3.1-70b" }
+}

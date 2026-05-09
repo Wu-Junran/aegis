@@ -1,0 +1,28 @@
+{
+	"request": {
+		"model": "gpt-5",
+		"max_tokens": 64,
+		"messages": [{ "role": "user", "content": "Read /etc/hosts" }],
+		"tools": [{ "name": "FileRead", "description": "Read a file", "input_schema": { "type": "object", "properties": { "path": { "type": "string" } }, "required": ["path"] } }]
+	},
+	"response": {
+		"id": "chatcmpl-tool-use-cassette",
+		"object": "chat.completion",
+		"created": 1714248002,
+		"model": "gpt-5",
+		"choices": [
+			{
+				"index": 0,
+				"message": {
+					"role": "assistant",
+					"content": null,
+					"tool_calls": [
+						{ "id": "call_FileRead_1", "type": "function", "function": { "name": "FileRead", "arguments": "{\"path\":\"/etc/hosts\"}" } }
+					]
+				},
+				"finish_reason": "tool_calls"
+			}
+		],
+		"usage": { "prompt_tokens": 18, "completion_tokens": 12, "total_tokens": 30 }
+	}
+}

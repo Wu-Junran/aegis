@@ -1,0 +1,15 @@
+{
+	"request": {
+		"model": "gpt-5",
+		"max_tokens": 64,
+		"messages": [{ "role": "user", "content": "Say hi." }]
+	},
+	"response": {
+		"id": "chatcmpl-cassette",
+		"object": "chat.completion",
+		"created": 1714248000,
+		"model": "gpt-5",
+		"choices": [{ "index": 0, "message": { "role": "assistant", "content": "hi" }, "finish_reason": "stop" }],
+		"usage": { "prompt_tokens": 3, "completion_tokens": 1, "total_tokens": 4 }
+	}
+}

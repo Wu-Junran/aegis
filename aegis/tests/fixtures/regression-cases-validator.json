@@ -1,0 +1,41 @@
+[
+  {
+    "name": "dose: lisinopril 1000mg → warn",
+    "note": "<!-- aegis:section=plan -->\nStart Lisinopril 1000mg daily.\n<!-- aegis:section=end -->",
+    "patient_context": {"observations": []},
+    "template": {"id": "soap", "name": "SOAP", "source": "builtin", "sections": [{"id": "plan", "title": "Plan", "requiredFields": [], "promptGuidance": ""}]},
+    "expected_check": "dose"
+  },
+  {
+    "name": "dates: 2024-01 outside encounter → warn",
+    "note": "Patient seen 2024-01-15.",
+    "patient_context": {"observations": [{"effectiveDateTime": "2026-04-15T00:00:00Z"}]},
+    "template": null,
+    "expected_check": "dates"
+  },
+  {
+    "name": "labs: fabricated potassium → warn",
+    "note": "Potassium was 5.4 mmol/L.",
+    "patient_context": {
+      "observations": [
+        {"code": {"text": "Potassium", "coding": [{"display": "Potassium"}]}, "valueQuantity": {"value": 4.2, "unit": "mmol/L"}}
+      ]
+    },
+    "template": null,
+    "expected_check": "labs"
+  },
+  {
+    "name": "allergies: amoxicillin in plan with penicillin allergy → warn",
+    "note": "<!-- aegis:section=plan -->\nStart Amoxicillin 500mg TID.\n<!-- aegis:section=end -->",
+    "patient_context": {"allergies": [{"code": {"text": "Penicillin", "coding": []}}]},
+    "template": null,
+    "expected_check": "allergies"
+  },
+  {
+    "name": "sections: missing plan → warn",
+    "note": "<!-- aegis:section=subjective -->\nA\n<!-- aegis:section=end -->",
+    "patient_context": {},
+    "template": {"id": "soap", "name": "SOAP", "source": "builtin", "sections": [{"id": "plan", "title": "Plan", "requiredFields": [], "promptGuidance": ""}]},
+    "expected_check": "sections"
+  }
+]

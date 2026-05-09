@@ -1,0 +1,4 @@
+{
+	"request": { "model": "glm-4", "max_tokens": 64, "messages": [{ "role": "user", "content": "Read /etc/hosts" }], "tools": [{ "name": "FileRead", "description": "Read a file", "input_schema": { "type": "object", "properties": { "path": { "type": "string" } }, "required": ["path"] } }] },
+	"response": { "id": "glm-tool-use-cassette", "model": "glm-4", "choices": [{ "index": 0, "message": { "role": "assistant", "content": null, "tool_calls": [{ "id": "call_glm_1", "type": "function", "function": { "name": "FileRead", "arguments": "{\"path\":\"/etc/hosts\"}" } }] }, "finish_reason": "tool_calls" }], "usage": { "prompt_tokens": 12, "completion_tokens": 9, "total_tokens": 21 } }
+}

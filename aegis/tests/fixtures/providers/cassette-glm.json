@@ -1,0 +1,15 @@
+{
+	"request": {
+		"model": "glm-4",
+		"max_tokens": 64,
+		"messages": [{ "role": "user", "content": "Say hi." }]
+	},
+	"response": {
+		"id": "chatcmpl-glm-cassette",
+		"object": "chat.completion",
+		"created": 1714248002,
+		"model": "glm-4",
+		"choices": [{ "index": 0, "message": { "role": "assistant", "content": "你好。" }, "finish_reason": "stop" }],
+		"usage": { "prompt_tokens": 3, "completion_tokens": 2, "total_tokens": 5 }
+	}
+}

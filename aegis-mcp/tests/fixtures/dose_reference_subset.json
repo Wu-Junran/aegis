@@ -1,0 +1,8 @@
+{
+  "schema_version": "1",
+  "drugs": [
+    {"name": "Lisinopril", "aliases": ["Prinivil"], "typical_max_mg": 80, "unit": "mg"},
+    {"name": "Levothyroxine", "aliases": ["Synthroid"], "typical_max_mg": 0.3, "unit": "mg"},
+    {"name": "Insulin Glargine", "aliases": ["Lantus"], "typical_max_mg": 200, "unit": "units"}
+  ]
+}

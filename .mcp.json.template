@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "aegis-mcp": {
+      "type": "stdio",
+      "command": "__AEGIS_MCP_BIN__",
+      "args": []
+    }
+  }
+}

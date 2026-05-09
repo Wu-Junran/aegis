@@ -1,0 +1,19 @@
+{
+	"request": {
+		"model": "llama-3.1-70b",
+		"max_tokens": 64,
+		"messages": [{ "role": "user", "content": "Say hi." }]
+	},
+	"response": {
+		"id": "chatcmpl-ollama-cassette",
+		"object": "chat.completion",
+		"created": 1714248001,
+		"model": "llama-3.1-70b",
+		"choices": [{ "index": 0, "message": { "role": "assistant", "content": "hi from llama" }, "finish_reason": "stop" }],
+		"usage": { "prompt_tokens": 3, "completion_tokens": 3, "total_tokens": 6 }
+	},
+	"providerOverride": {
+		"baseURL": "http://localhost:11434/v1",
+		"modelId": "llama-3.1-70b"
+	}
+}

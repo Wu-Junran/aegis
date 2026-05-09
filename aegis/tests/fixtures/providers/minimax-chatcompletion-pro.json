@@ -1,0 +1,14 @@
+{
+	"id": "mm-test",
+	"model": "abab6.5-chat",
+	"reply": "Hello from Minimax.",
+	"choices": [
+		{
+			"messages": [
+				{ "sender_type": "BOT", "sender_name": "MiniMax", "text": "Hello from Minimax." }
+			],
+			"finish_reason": "stop"
+		}
+	],
+	"usage": { "total_tokens": 12, "prompt_tokens": 7, "completion_tokens": 5 }
+}
